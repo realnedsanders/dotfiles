@@ -1,0 +1,24 @@
+[commit]
+	gpgsign = true
+[user]
+	email = antonio.escalera@circonus.com
+	name = Antonio Escalera
+	signingkey = 9CA21E8EC6CF9C902A2CFA057A6ECCDA71F9978A
+[init]
+	defalutbranch = master
+	defaultBranch = master
+[tag]
+	forceSignAnnotated = true
+[core]
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[add.interactive]
+  useBuiltin = false # required for git 2.37.0
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+[merge]
+  conflictstyle = diff3
+[diff]
+  colorMoved = default

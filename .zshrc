@@ -69,12 +69,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+ZSH_TMUX_AUTOSTART=true
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-256color autoupdate zsh-syntax-highlighting kubectl)
+plugins=(git zsh-autosuggestions zsh-256color autoupdate zsh-syntax-highlighting kubectl tmux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,6 +125,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias svi="sudo (which nvim)"
 alias svim="sudo (which nvim)"
+alias diff="delta"
 alias cat="bat"
 alias clear="clear && neofetch"
 alias lc="limactl"

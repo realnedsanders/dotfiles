@@ -76,7 +76,7 @@ ZSH_TMUX_AUTOSTART=true
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-256color autoupdate zsh-syntax-highlighting kubectl tmux)
+plugins=(git zsh-autosuggestions zsh-256color autoupdate zsh-syntax-highlighting kubectl tmux gpg-agent)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -110,14 +110,7 @@ export EDITOR=nvim
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# ensure openssl is used over libressl
-export PATH=/opt/homebrew/opt/openssl@3/bin:$PATH
 export PATH=~/go/bin:$PATH
-
-# gpg agent
-export GPG_TTY=$(tty)
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
 
 # aliases
 alias ls="exa -a --long --git"
@@ -157,15 +150,5 @@ function rsed {
   fi
   grep -rl "${GREP_STRING}" | xargs sed -i '' -e 's'"${SED_DELIMITER}${SED_SEARCH_STRING}${SED_DELIMITER}${SED_REPLACE_STRING}${SED_DELIMITER}"'g'
 }
-
-# kube-ps1
-source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
-PS1='$(kube_ps1)'$PS1
-
-# gcloud completions
-source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-
-# gcloud components
-source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True

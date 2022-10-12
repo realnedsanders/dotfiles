@@ -1,9 +1,9 @@
 [commit]
 	gpgsign = true
 [user]
-	email = antonio.escalera@circonus.com
+	email = 5915044+aescaler-a0d@users.noreply.github.com
 	name = Antonio Escalera
-	signingkey = 9CA21E8EC6CF9C902A2CFA057A6ECCDA71F9978A
+	signingkey = 3BDFAF9CDD976164EEAD6131BBF0721B17ED22CE
 [init]
 	defalutbranch = master
 	defaultBranch = master

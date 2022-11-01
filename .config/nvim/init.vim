@@ -21,7 +21,10 @@ Plug 'hashivim/vim-terraform'
 Plug 'MattesGroeger/vim-bookmarks'
 
 " theme matching with terminal
-Plug 'dylanaraps/wal.vim'
+" Plug 'dylanaraps/wal.vim'
+Plug 'overcache/NeoSolarized'
+" Plug 'shaunsingh/moonlight.nvim'
+" Plug 'shaunsingh/nord.nvim'
 
 " git integration
 Plug 'tpope/vim-fugitive'
@@ -36,6 +39,8 @@ Plug 'tpope/vim-surround'
 
 " statusline 
 Plug 'vim-airline/vim-airline'
+
+Plug 'kyazdani42/nvim-web-devicons' 
 
 call plug#end()
 
@@ -60,8 +65,14 @@ set tabstop=2
 set shiftwidth=2
 
 " general UI stuff
-colorscheme wal
+set cursorline
+set termguicolors
+" colorscheme moonlight
+colorscheme NeoSolarized
+" colorscheme nord
+set background=dark
 set number
+set relativenumber
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*

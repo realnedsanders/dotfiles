@@ -1,3 +1,7 @@
+"
+" vim-plugged
+"
+
 " if vim-plugged isn't already set up, set it up
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -17,14 +21,12 @@ Plug 'jparise/vim-graphql'
 " or an hcl plugin
 Plug 'hashivim/vim-terraform'
 
+" treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
 " bookmarks and annotations
 Plug 'MattesGroeger/vim-bookmarks'
-
-" theme matching with terminal
-" Plug 'dylanaraps/wal.vim'
-Plug 'overcache/NeoSolarized'
-" Plug 'shaunsingh/moonlight.nvim'
-" Plug 'shaunsingh/nord.nvim'
 
 " git integration
 Plug 'tpope/vim-fugitive'
@@ -33,26 +35,67 @@ Plug 'airblade/vim-gitgutter'
 
 " go integration
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" rust integration
+Plug 'simrat39/rust-tools.nvim', { 'for': [ 'rust' ] }
 
 "
 Plug 'tpope/vim-surround'
 
 " statusline 
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'SmiteshP/nvim-navic'
 
 Plug 'kyazdani42/nvim-web-devicons' 
+Plug 'norcalli/nvim-colorizer.lua'
+
+" tabline
+Plug 'romgrk/barbar.nvim'
+
+" file tree
+Plug 'nvim-tree/nvim-tree.lua'
+
+" toggleterm
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+
+" indent
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+" theme matching with terminal
+" Plug 'dylanaraps/wal.vim'
+Plug 'overcache/NeoSolarized'
+" Plug 'shaunsingh/moonlight.nvim'
+" Plug 'shaunsingh/nord.nvim'
 
 call plug#end()
 
 " coc extensions
 let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-css', 'coc-tabnine', 'coc-tsserver', 'coc-yaml', 'coc-go', 'coc-sh', 'coc-rust-analyzer', 'coc-markdownlint', 'coc-cmake', 'coc-cssmodules', 'coc-clangd', 'coc-fzf-preview', 'coc-pyright']
 
-" airline
-let g:airline#extensions#coc#enabled = 1
+" set encodings
+set encoding=utf-8
+set fileencoding=utf-8
+
+"
+set mouse=a
+set wrap linebreak
+set splitbelow splitright
+set completeopt=menuone,noselect
+set foldmethod=syntax
+set title
+set noshowmode
+set virtualedit=block
+set signcolumn=yes
+
+"
+set laststatus=3
+set winbar=%=%m\ %f
+
+"
+autocmd BufEnter * setlocal fo-=c fo-=r fo-=o
 
 " set shell
-set shell=/bin/bash
-let $SHELL = "/bin/bash"
+set shell=/bin/zsh
+let $SHELL = "/bin/zsh"
 
 " search options
 set incsearch
@@ -64,47 +107,63 @@ set softtabstop=2
 set tabstop=2
 set shiftwidth=2
 
+"
 " general UI stuff
+"
+
 set cursorline
-set termguicolors
+setglobal termguicolors
 " colorscheme moonlight
 colorscheme NeoSolarized
 " colorscheme nord
 set background=dark
 set number
 set relativenumber
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 
-" git time metrics
-" let g:gtm_plugin_status_enabled = 1
-" function! AirlineInit()
-"   if exists('*GTMStatusline')
-"     call airline#parts#define_function('gtmstatus', 'GTMStatusline')
-"     let g:airline_section_b = airline#section#create([g:airline_section_b, ' ', '[', 'gtmstatus', ']'])
-"   endif
-" endfunction
-" autocmd User AirlineAfterInit call AirlineInit()
-
+"
 " personal shortcuts
+"
+
+" clipboard
+set clipboard=unnamedplus
+xnoremap p pgvy
+
+" jump to start of line
+function! JumpToStartOfLine()
+
+   let l:CurCol = col(".")
+
+   if l:CurCol == 1
+      normal _
+   else
+      normal 0
+      " call cursor(".", 1)
+   endif
+
+endfunction
+
+" jump to end line
+function! JumpToEndOfLine()
+
+   let l:CurCol = col(".")
+   let l:EndCol = col("$")-1
+
+   if l:CurCol == l:EndCol
+      normal g_
+   else
+      normal $
+      " exec 'call cursor(".", '.l:EndCol.')'
+   endif
+
+endfunction
+
+nnoremap H :call JumpToStartOfLine()<CR>
+nnoremap L :call JumpToEndOfLine()<CR>
 
 " map leader to comma
 let mapleader = "," 
-" clear search highlight
+" clear search highlight with ",h"
 map <Leader>h :noh<CR>
-
-" coc
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -127,10 +186,6 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " fzf
 nmap <Leader>f [fzf-p]
 xmap <Leader>f [fzf-p]
@@ -152,5 +207,8 @@ nnoremap <silent> [fzf-p]q     :<C-u>CocCommand fzf-preview.QuickFix<CR>
 nnoremap <silent> [fzf-p]l     :<C-u>CocCommand fzf-preview.LocationList<CR>
 
 
-xnoremap p pgvy
+"
+" Lua config
+"
+lua require('config')
 

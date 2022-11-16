@@ -101,7 +101,8 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 export EDITOR=nvim
-
+export TERMINAL=st
+export DE=generic
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -117,8 +118,9 @@ export EDITOR=nvim
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH=~/go/bin:$PATH
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH=~/go/bin:${PATH}
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:${PATH}"
+export PATH=/usr/local/texlive/2022/bin/x86_64-linux:${PATH}
 
 # aliases
 alias ls="exa -a --long --git"
@@ -162,3 +164,7 @@ function rsed {
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 xset r rate 250 100
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

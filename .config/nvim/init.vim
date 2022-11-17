@@ -69,7 +69,7 @@ Plug 'overcache/NeoSolarized'
 call plug#end()
 
 " coc extensions
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-css', 'coc-tabnine', 'coc-tsserver', 'coc-yaml', 'coc-go', 'coc-sh', 'coc-rust-analyzer', 'coc-markdownlint', 'coc-cmake', 'coc-cssmodules', 'coc-clangd', 'coc-fzf-preview', 'coc-pyright']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-css', 'coc-tabnine', 'coc-tsserver', 'coc-yaml', 'coc-go', 'coc-sh', 'coc-rust-analyzer', 'coc-markdownlint', 'coc-cmake', 'coc-cssmodules', 'coc-clangd', 'coc-fzf-preview', 'coc-pyright', 'coc-prettier' ]
 
 " set encodings
 set encoding=utf-8
@@ -160,31 +160,16 @@ endfunction
 nnoremap H :call JumpToStartOfLine()<CR>
 nnoremap L :call JumpToEndOfLine()<CR>
 
+" inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+" inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+inoremap <expr> <F2> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
 " map leader to comma
 let mapleader = "," 
-" clear search highlight with ",h"
-map <Leader>h :noh<CR>
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" clear search highlight with ",/"
+map <Leader>/ :noh<CR>
 
 " fzf
 nmap <Leader>f [fzf-p]

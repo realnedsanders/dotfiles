@@ -65,6 +65,12 @@
 #"rxvt"
 #  Control + b:2 + Release
 
+"xvkbd -xsendevent -text '\[F2]'"
+  Alt+Tab
+
+"xvkbd -xsendevent -text '\[F3]'"
+  Alt+Escape
+
 "slock"
   Mod4+Shift+L
 

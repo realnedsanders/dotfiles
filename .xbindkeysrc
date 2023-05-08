@@ -74,15 +74,18 @@
 "slock"
   Mod4+Shift+L
 
-"pactl set-sink-volume @DEFAULT_SINK@ +1000"
+"sh -c 'maim -s | xclip -selection clipboard -t image/png'"
+  Shift + Mod4 + s
+
+"pactl set-sink-volume @DEFAULT_SINK@ +1000; kill -44 $(pidof dwmblocks)"
    XF86AudioRaiseVolume
 
 # Decrease volume
-"pactl set-sink-volume @DEFAULT_SINK@ -1000"
+"pactl set-sink-volume @DEFAULT_SINK@ -1000; kill -44 $(pidof dwmblocks)"
    XF86AudioLowerVolume
 
 # Mute volume
-"pactl set-sink-mute @DEFAULT_SINK@ toggle"
+"pactl set-sink-mute @DEFAULT_SINK@ toggle; kill -44 $(pidof dwmblocks)"
    XF86AudioMute
 
 ##################################

@@ -1,5 +1,5 @@
 if [ -z "${DISPLAY}" ] && [ $(tty) = "/dev/tty1" ]; then
-  exec startx
+  startx
 fi
 
 command clear && neofetch
@@ -89,6 +89,12 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source $HOME/.config/broot/launcher/bash/br
+
+xset r rate 250 100
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -115,15 +121,17 @@ export DE=generic
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-export PATH=~/go/bin:${PATH}
+export PATH="${HOME}/.cargo/bin:${PATH}"
+export PATH="${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/.local/bin/statusbar:${PATH}"
+export PATH="${HOME}/go/bin:${PATH}"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:${PATH}"
-export PATH=/usr/local/texlive/2022/bin/x86_64-linux:${PATH}
+export PATH="/usr/local/texlive/2022/bin/x86_64-linux:${PATH}"
 
 # aliases
 alias ls="exa -a --long --git"
+# alias ls="br -sdp"
+alias du="br --whale-spotting --sort-by-size"
 alias vi="nvim"
 alias vim="nvim"
 alias svi="sudo (which nvim)"
@@ -136,6 +144,7 @@ alias k="kubectl"
 alias hs="helmfile sync"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias tag="git tag -s"
+alias grep="rg"
 
 function dev {
 	DEVVPN=/Users/aescaler/Connections/DevConnection
@@ -145,6 +154,18 @@ function dev {
 
 function push {
   git push -u origin $(git rev-parse --abbrev-ref HEAD)
+}
+
+function vault {
+  ACTION="${1}"
+  case $ACTION in
+    unlock)
+      echo ""
+      ;;
+    lock)
+      echo ""
+      ;;
+  esac
 }
 
 # rsed GREP_STRING SED_SEARCH_STRING SED_REPLACE_STRING [SED_DELIMITER]
@@ -158,13 +179,13 @@ function rsed {
     echo "rsed GREP_STRING SED_SEARCH_STRING SED_REPLACE_STRING [SED_DELIMITER]"
     return
   fi
-  grep -rl "${GREP_STRING}" | xargs sed -i '' -e 's'"${SED_DELIMITER}${SED_SEARCH_STRING}${SED_DELIMITER}${SED_REPLACE_STRING}${SED_DELIMITER}"'g'
+  \grep -rl "${GREP_STRING}" | xargs sed -i '' -e 's'"${SED_DELIMITER}${SED_SEARCH_STRING}${SED_DELIMITER}${SED_REPLACE_STRING}${SED_DELIMITER}"'g'
 }
 
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
-xset r rate 250 100
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(~/.cargo/bin/rtx activate zsh)"
